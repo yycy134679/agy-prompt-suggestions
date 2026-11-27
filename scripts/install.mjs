@@ -76,7 +76,7 @@ export function installPlugin({
   const agyBin = resolveAgyCliBinary({ platform, env, homedir: home });
 
   return {
-    version: pkg.version || '1.1.0',
+    version: pkg.version || '1.1.1',
     installedDir: dstRoot,
     dataDir: pluginDataDir({ home, env }),
     debugPort,

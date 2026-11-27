@@ -12,7 +12,7 @@ test('installPlugin deploys bundle cleanly, preserves user settings on reinstall
     const res1 = installPlugin({ home: fakeHome, env: {} });
     const expectedDir = resolveInstallTarget({ home: fakeHome });
     assert.equal(res1.installedDir, expectedDir);
-    assert.equal(res1.version, '1.1.0');
+    assert.equal(res1.version, '1.1.1');
 
     for (const entry of BUNDLE_ENTRIES) {
       assert.ok(fs.existsSync(path.join(expectedDir, entry)), `expected installed entry: ${entry}`);

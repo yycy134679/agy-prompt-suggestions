@@ -2,7 +2,7 @@
   <img src="assets/logo.svg" width="72" height="72" alt="Prompt Suggestions Logo" />
   <h1>Agy Prompt Suggestions</h1>
   <p><strong>Antigravity 2.0 独立「输入框下一句预测」原生插件（Ghost Text + Tab 补全）</strong></p>
-  <p>v1.1.0 | MIT License | Antigravity 2.33+ | Node.js &gt;= 22.13 | macOS / Windows / Linux</p>
+  <p>v1.1.1 | MIT License | Antigravity 2.33+ | Node.js &gt;= 22.13 | macOS / Windows / Linux</p>
 </div>
 
 ---

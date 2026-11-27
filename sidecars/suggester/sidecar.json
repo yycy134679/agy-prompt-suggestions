@@ -4,7 +4,7 @@
     "main.mjs"
   ],
   "env": {
-    "AGPS_VERSION": "1.1.0"
+    "AGPS_VERSION": "1.1.1"
   },
   "restart_policy": "always",
   "display_name": "Prompt Suggestions",
