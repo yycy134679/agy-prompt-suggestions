@@ -1,0 +1,12 @@
+{
+  "name": "prompt-suggestions",
+  "displayName": "Prompt Suggestions",
+  "version": "1.0.0",
+  "description": "在 Antigravity 回复结束后于空输入框显示下一句预测（Ghost Text），按 Tab / → 一键补全，独立支持主对话、分屏、旁路提问与子智能体窗格。",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "检查 prompt-suggestions 插件的连接状态和后台预测进程",
+    "把下一句预测的模型切换为 Gemini 4 Hydrogen (Low)",
+    "暂停或重新开启输入框下一句预测功能"
+  ]
+}
