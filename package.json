@@ -5,6 +5,11 @@
   "type": "module",
   "description": "Standalone Antigravity plugin for Claude Code-style Ghost Text prompt suggestions extracted from antigravity-codex-theme.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yycy134679/prompt-suggestions.git"
+  },
+  "homepage": "https://github.com/yycy134679/prompt-suggestions#readme",
   "engines": {
     "node": ">=22.13.0"
   },

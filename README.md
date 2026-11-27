@@ -34,15 +34,17 @@
 
 ### 方式一：命令行安装
 
-克隆或下载本仓库后，在项目根目录执行：
-
 ```sh
 # macOS / Linux / WSL2
+git clone https://github.com/yycy134679/prompt-suggestions.git
+cd prompt-suggestions
 sh ./install.sh
 ```
 
 ```powershell
 # Windows (PowerShell)
+git clone https://github.com/yycy134679/prompt-suggestions.git
+cd prompt-suggestions
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
@@ -52,7 +54,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 
 将以下提示词发给 Antigravity 或其他本地 Coding Agent：
 
-> 请帮我安装当前仓库中的 Antigravity 插件 `prompt-suggestions`：先阅读 README.md，运行 `sh ./install.sh`（Windows 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1`）将插件安装到 `~/.gemini/config/plugins/prompt-suggestions/`，并运行 `npm run check && npm test` 确认校验通过。
+> 请帮我安装 Antigravity 插件 https://github.com/yycy134679/prompt-suggestions ：克隆仓库后先阅读 README.md，运行 `sh ./install.sh`（Windows 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1`）将插件安装到 `~/.gemini/config/plugins/prompt-suggestions/`，并运行 `npm run check && npm test` 确认校验通过。
 
 ### 卸载
 

@@ -2,6 +2,12 @@
   "name": "prompt-suggestions",
   "displayName": "Prompt Suggestions",
   "version": "1.0.0",
+  "author": {
+    "name": "yycy134679",
+    "url": "https://github.com/yycy134679"
+  },
+  "homepage": "https://github.com/yycy134679/prompt-suggestions",
+  "repository": "https://github.com/yycy134679/prompt-suggestions",
   "description": "在 Antigravity 回复结束后于空输入框显示下一句预测（Ghost Text），按 Tab / → 一键补全，独立支持主对话、分屏、旁路提问与子智能体窗格。",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
