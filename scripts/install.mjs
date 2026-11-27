@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { devToolsPortFile, manualLaunchCommand, pluginDataDir } from '../lib/paths.mjs';
 import { readDebugPort } from '../lib/cdp-host.mjs';
 import { resolveAgyCliBinary } from '../lib/engine.mjs';
+import { configureLaunchers } from '../lib/launcher.mjs';
 
 export const PLUGIN_DIR_NAME = 'prompt-suggestions';
 
@@ -16,7 +17,8 @@ export const BUNDLE_ENTRIES = Object.freeze([
   'assets',
   'lib',
   'sidecars',
-  'skills'
+  'skills',
+  'scripts/relaunch-helper.mjs'
 ]);
 
 export function resolveInstallTarget({ home = os.homedir(), targetDir = '' } = {}) {
@@ -44,7 +46,9 @@ export function installPlugin({
       for (const entry of BUNDLE_ENTRIES) {
         const srcPath = path.join(srcRoot, entry);
         if (!fs.existsSync(srcPath)) continue;
-        fs.cpSync(srcPath, path.join(stageDir, entry), { recursive: true });
+        const dstPath = path.join(stageDir, entry);
+        fs.mkdirSync(path.dirname(dstPath), { recursive: true });
+        fs.cpSync(srcPath, dstPath, { recursive: true });
       }
       if (fs.existsSync(dstRoot)) {
         fs.renameSync(dstRoot, backupDir);
@@ -66,16 +70,18 @@ export function installPlugin({
   }
 
   const pkg = JSON.parse(fs.readFileSync(path.join(dstRoot, 'package.json'), 'utf8'));
+  const launcher = configureLaunchers({ platform, home, env });
   const portFile = devToolsPortFile({ home, env, platform });
   const debugPort = readDebugPort(portFile);
   const agyBin = resolveAgyCliBinary({ platform, env, homedir: home });
 
   return {
-    version: pkg.version || '1.0.0',
+    version: pkg.version || '1.1.0',
     installedDir: dstRoot,
     dataDir: pluginDataDir({ home, env }),
     debugPort,
     agyBin,
+    launcher,
     manualCommand: manualLaunchCommand({ platform })
   };
 }

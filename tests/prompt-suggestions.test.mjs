@@ -78,13 +78,13 @@ test('settings store persists changes, sanitizes invalid model IDs, and notifies
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'agps-settings-'));
   try {
     const store = createSettingsStore({ dataDir: tmpDir });
-    assert.deepEqual(store.get(), { enabled: true, model: DEFAULT_MODEL });
+    assert.deepEqual(store.get(), { enabled: true, model: DEFAULT_MODEL, autoRelaunch: true });
 
     const events = [];
     const unsub = store.subscribe((next, prev) => events.push({ next, prev }));
 
-    const saved = store.set({ enabled: false, model: 'gemini-4-neon-medium' });
-    assert.deepEqual(saved, { enabled: false, model: 'gemini-4-neon-medium' });
+    const saved = store.set({ enabled: false, model: 'gemini-4-neon-medium', autoRelaunch: false });
+    assert.deepEqual(saved, { enabled: false, model: 'gemini-4-neon-medium', autoRelaunch: false });
     assert.equal(events.length, 1);
 
     // Invalid model ID falls back to default
@@ -92,7 +92,7 @@ test('settings store persists changes, sanitizes invalid model IDs, and notifies
     assert.equal(sanitizeModelId('bad model with spaces'), DEFAULT_MODEL);
 
     const store2 = createSettingsStore({ dataDir: tmpDir });
-    assert.deepEqual(store2.get(), { enabled: false, model: 'gemini-4-neon-medium' });
+    assert.deepEqual(store2.get(), { enabled: false, model: 'gemini-4-neon-medium', autoRelaunch: false });
     unsub();
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });

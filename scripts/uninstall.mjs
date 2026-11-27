@@ -3,12 +3,14 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { pluginDataDir } from '../lib/paths.mjs';
+import { removeLaunchers } from '../lib/launcher.mjs';
 import { resolveInstallTarget } from './install.mjs';
 
 export function uninstallPlugin({
   home = os.homedir(),
   targetDir = '',
   env = process.env,
+  platform = process.platform,
   purge = false
 } = {}) {
   const dstRoot = resolveInstallTarget({ home, targetDir });
@@ -18,6 +20,7 @@ export function uninstallPlugin({
   if (removedPlugin) {
     fs.rmSync(dstRoot, { recursive: true, force: true });
   }
+  const removedLaunchers = removeLaunchers({ platform, home });
 
   let removedData = false;
   if (purge && fs.existsSync(dataDir)) {
@@ -29,6 +32,7 @@ export function uninstallPlugin({
     installedDir: dstRoot,
     dataDir,
     removedPlugin,
+    removedLaunchers,
     removedData
   };
 }

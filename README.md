@@ -2,7 +2,7 @@
   <img src="assets/logo.svg" width="72" height="72" alt="Prompt Suggestions Logo" />
   <h1>Antigravity Prompt Suggestions</h1>
   <p><strong>Antigravity 2.0 独立「输入框下一句预测」原生插件（Ghost Text + Tab 补全）</strong></p>
-  <p>v1.0.0 | MIT License | Antigravity 2.33+ | Node.js &gt;= 22.13 | macOS / Windows / Linux</p>
+  <p>v1.1.0 | MIT License | Antigravity 2.33+ | Node.js &gt;= 22.13 | macOS / Windows / Linux</p>
 </div>
 
 ---
@@ -19,16 +19,16 @@
 - **独立侧边控制面板**：内置 Antigravity 辅助面板「下一句预测」，支持一键开关、通过 `agy models` 动态切换预测模型与思考强度（默认 `Gemini 4 Hydrogen (Low)`）、查看运行状态与清空缓存。
 - **独立命名空间与深浅色自适应**：所有 DOM、样式类、全局变量与 CDP 绑定均使用 `agps` 前缀，不依赖任何第三方主题即可自动适配浅色与深色模式。
 
+- **独立开启本地调试端口（不依赖其他插件）**：
+  - **macOS**：直接双击原版 Antigravity 图标即可（无需第二个 `.app` 图标），冷启动无调试端口时自动带 `--remote-debugging-port=0` 重启一次，内置 20s 冷启动时间窗、活跃会话 WAL 保护、120s 冷却与连续 2 次失败熔断；右侧面板也提供「立即带调试端口重启」按钮与自动重启开关。
+  - **Windows / Linux**：安装时自动为 Antigravity 快捷方式（`.lnk`）或桌面入口（`~/.local/share/applications/antigravity.desktop`）补充 `--remote-debugging-port=0`。
+  - **与 Agy Powertools 和平共存**：检测到已安装 `agy-powertools` 时自动避让冷启动重启，避免双重重启冲突。
+
 ## 前置要求
 
 1. **Node.js >= 22.13.0**（安装脚本会自动优先检测本机 `node`，缺失时回退至 Antigravity 内置的 `agy-node`）。
 2. 本地已安装并登录 **`agy` CLI**（`~/.local/bin/agy` 或 `PATH` 可见）。
-3. Antigravity 开启本地调试端口（`DevToolsActivePort`）：
-   - 若你已安装并启用 `agy-powertools`，本地调试端口通常已自动开启，**直接安装本插件即可立即生效**。
-   - 若未开启调试端口，可用以下命令启动 Antigravity：
-     - **macOS**：`open -a Antigravity --args --remote-debugging-port=0`
-     - **Linux**：`antigravity --remote-debugging-port=0`
-     - **Windows**：`Antigravity.exe --remote-debugging-port=0`
+3. Antigravity `2.33.0+`：插件已内置调试端口启动支持；若当前窗口是在安装前无调试端口启动的，点击右侧「下一句预测」面板中的 **「立即带调试端口重启」** 或重启一次 Antigravity 即可生效。
 
 ## 安装与卸载
 
@@ -73,7 +73,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 ```json
 {
   "enabled": true,
-  "model": "gemini-4-hydrogen-low"
+  "model": "gemini-4-hydrogen-low",
+  "autoRelaunch": true
 }
 ```
 
@@ -81,6 +82,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 | :--- | :--- | :--- |
 | `enabled` | `true` | 是否开启预测；设为 `false` 后立即移除 Ghost Text 并停止后台 `agy` 进程 |
 | `model` | `"gemini-4-hydrogen-low"` | 预测使用的模型 ID（可运行 `agy models` 查看全部可用 ID） |
+| `autoRelaunch` | `true` | 冷启动无调试端口时是否自动带 `--remote-debugging-port=0` 重启一次（已装 `agy-powertools` 时自动避让） |
 
 ## 项目结构
 

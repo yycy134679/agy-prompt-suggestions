@@ -1,6 +1,6 @@
 {
   "name": "antigravity-prompt-suggestions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "Standalone Antigravity plugin for Claude Code-style Ghost Text prompt suggestions extracted from antigravity-codex-theme.",
@@ -14,7 +14,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "check": "node --check sidecars/suggester/main.mjs && node --check lib/paths.mjs && node --check lib/settings.mjs && node --check lib/engine.mjs && node --check lib/cdp-host.mjs && node --check lib/web-ui.mjs && node --check lib/runtime.js && node --check scripts/install.mjs && node --check scripts/uninstall.mjs",
+    "check": "node --check sidecars/suggester/main.mjs && node --check lib/paths.mjs && node --check lib/settings.mjs && node --check lib/engine.mjs && node --check lib/cdp-host.mjs && node --check lib/launcher.mjs && node --check lib/web-ui.mjs && node --check lib/runtime.js && node --check scripts/install.mjs && node --check scripts/uninstall.mjs && node --check scripts/relaunch-helper.mjs",
     "test": "node --test tests/*.test.mjs",
     "install:local": "node scripts/install.mjs",
     "uninstall:local": "node scripts/uninstall.mjs"
