@@ -1,5 +1,5 @@
 {
-  "name": "antigravity-prompt-suggestions",
+  "name": "agy-prompt-suggestions",
   "version": "1.1.0",
   "private": true,
   "type": "module",
@@ -7,9 +7,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yycy134679/prompt-suggestions.git"
+    "url": "https://github.com/yycy134679/agy-prompt-suggestions.git"
   },
-  "homepage": "https://github.com/yycy134679/prompt-suggestions#readme",
+  "homepage": "https://github.com/yycy134679/agy-prompt-suggestions#readme",
   "engines": {
     "node": ">=22.13.0"
   },

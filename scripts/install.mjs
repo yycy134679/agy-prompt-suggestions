@@ -7,7 +7,7 @@ import { readDebugPort } from '../lib/cdp-host.mjs';
 import { resolveAgyCliBinary } from '../lib/engine.mjs';
 import { configureLaunchers } from '../lib/launcher.mjs';
 
-export const PLUGIN_DIR_NAME = 'prompt-suggestions';
+export const PLUGIN_DIR_NAME = 'agy-prompt-suggestions';
 
 export const BUNDLE_ENTRIES = Object.freeze([
   'plugin.json',

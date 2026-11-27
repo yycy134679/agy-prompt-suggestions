@@ -1,6 +1,6 @@
 <div align="center">
   <img src="assets/logo.svg" width="72" height="72" alt="Prompt Suggestions Logo" />
-  <h1>Antigravity Prompt Suggestions</h1>
+  <h1>Agy Prompt Suggestions</h1>
   <p><strong>Antigravity 2.0 独立「输入框下一句预测」原生插件（Ghost Text + Tab 补全）</strong></p>
   <p>v1.1.0 | MIT License | Antigravity 2.33+ | Node.js &gt;= 22.13 | macOS / Windows / Linux</p>
 </div>
@@ -36,25 +36,25 @@
 
 ```sh
 # macOS / Linux / WSL2
-git clone https://github.com/yycy134679/prompt-suggestions.git
-cd prompt-suggestions
+git clone https://github.com/yycy134679/agy-prompt-suggestions.git
+cd agy-prompt-suggestions
 sh ./install.sh
 ```
 
 ```powershell
 # Windows (PowerShell)
-git clone https://github.com/yycy134679/prompt-suggestions.git
-cd prompt-suggestions
+git clone https://github.com/yycy134679/agy-prompt-suggestions.git
+cd agy-prompt-suggestions
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-安装脚本会将运行时文件原子替换部署至 `~/.gemini/config/plugins/prompt-suggestions/`，不会覆盖你的个人配置文件，也无需修改 Antigravity 安装包。
+安装脚本会将运行时文件原子替换部署至 `~/.gemini/config/plugins/agy-prompt-suggestions/`，不会覆盖你的个人配置文件，也无需修改 Antigravity 安装包。
 
 ### 方式二：发给 Agent 一键安装
 
 将以下提示词发给 Antigravity 或其他本地 Coding Agent：
 
-> 请帮我安装 Antigravity 插件 https://github.com/yycy134679/prompt-suggestions ：克隆仓库后先阅读 README.md，运行 `sh ./install.sh`（Windows 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1`）将插件安装到 `~/.gemini/config/plugins/prompt-suggestions/`，并运行 `npm run check && npm test` 确认校验通过。
+> 请帮我安装 Antigravity 插件 https://github.com/yycy134679/agy-prompt-suggestions ：克隆仓库后先阅读 README.md，运行 `sh ./install.sh`（Windows 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1`）将插件安装到 `~/.gemini/config/plugins/agy-prompt-suggestions/`，并运行 `npm run check && npm test` 确认校验通过。
 
 ### 卸载
 
@@ -68,7 +68,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 ## 配置说明
 
-推荐直接在 Antigravity 右侧辅助面板 **「下一句预测」** 中可视化操作，或直接编辑 `~/.gemini/antigravity/plugin_data/prompt-suggestions/settings.json`（Sidecar 会在 3 秒内自动热生效）：
+推荐直接在 Antigravity 右侧辅助面板 **「下一句预测」** 中可视化操作，或直接编辑 `~/.gemini/antigravity/plugin_data/agy-prompt-suggestions/settings.json`（Sidecar 会在 3 秒内自动热生效）：
 
 ```json
 {
@@ -87,14 +87,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 ## 项目结构
 
 ```text
-prompt-suggestions/
+agy-prompt-suggestions/
 ├── plugin.json                    # Antigravity 插件清单
 ├── assets/logo.svg                # 插件图标
 ├── install.sh / uninstall.sh      # macOS / Linux / WSL2 安装与卸载入口
 ├── install.ps1 / uninstall.ps1    # Windows PowerShell 安装与卸载入口
 ├── scripts/
 │   ├── install.mjs                # 原子部署安装器
-│   └── uninstall.mjs              # 卸载器（支持 --purge）
+│   ├── uninstall.mjs              # 卸载器（支持 --purge）
+│   └── relaunch-helper.mjs        # 独立 detached 调试端口重启辅助进程
 ├── sidecars/suggester/
 │   ├── sidecar.json               # Antigravity 原生 Sidecar 与辅助面板声明
 │   └── main.mjs                   # Sidecar 主入口与优雅退出清理
@@ -102,13 +103,15 @@ prompt-suggestions/
 │   ├── engine.mjs                 # 常驻 agy stream-json 预测引擎
 │   ├── runtime.js                 # 浏览器端 Ghost Text 与 Lexical 补全运行时
 │   ├── cdp-host.mjs               # CDP 目标发现、绑定桥接与保活管理
+│   ├── launcher.mjs               # 跨平台调试端口启动与冷启动防循环控制
 │   ├── web-ui.mjs                 # 侧边辅助控制面板
 │   ├── settings.mjs               # 配置持久化与变更订阅
 │   └── paths.mjs                  # 跨平台 DevToolsActivePort 与数据目录解析
-├── skills/prompt-suggestions/
+├── skills/agy-prompt-suggestions/
 │   └── SKILL.md                   # 供对话中排查与切换模型的内置技能
 └── tests/
     ├── prompt-suggestions.test.mjs
+    ├── launcher.test.mjs
     └── install.test.mjs
 ```
 
@@ -117,7 +120,7 @@ prompt-suggestions/
 ```sh
 npm run check          # 全量语法校验
 npm test               # 运行 node:test 单元测试
-npm run install:local  # 将本地修改部署到 ~/.gemini/config/plugins/prompt-suggestions
+npm run install:local  # 将本地修改部署到 ~/.gemini/config/plugins/agy-prompt-suggestions
 ```
 
 ## 致谢与协议
