@@ -125,6 +125,8 @@ npm run install:local  # 将本地修改部署到 ~/.gemini/config/plugins/agy-p
 
 ## 致谢与协议
 
-核心预测引擎与 Lexical 补全逻辑抽取并改编自 [nkjDSLcvanv/antigravity-codex-theme](https://github.com/nkjDSLcvanv/antigravity-codex-theme)（MIT 协议，原作者 [@isdou](https://github.com/isdou) PR #1）；跨平台 `agy-node` 启动器检测思路参考了 [WhiteBr1ck/agy-powertools](https://github.com/WhiteBr1ck/agy-powertools)（MIT 协议）。
+- 核心预测引擎与 Lexical 补全逻辑抽取并改编自 [nkjDSLcvanv/antigravity-codex-theme](https://github.com/nkjDSLcvanv/antigravity-codex-theme)（MIT 协议，原作者 [@isdou](https://github.com/isdou) PR #1）。
+- 跨平台 `agy-node` 启动器检测思路参考了 [WhiteBr1ck/agy-powertools](https://github.com/WhiteBr1ck/agy-powertools)（MIT 协议）。
+- 社区交流与友情链接：[LINUX DO](https://linux.do/) - 新的理想型社区。
 
 本项目基于 [MIT License](LICENSE) 开源。
