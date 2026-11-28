@@ -532,6 +532,8 @@ test('runtime.js mounts ghost overlay, accepts on Tab, respects dark mode, and c
     Event: FakeInputEvent,
     setTimeout,
     clearTimeout,
+    setInterval,
+    clearInterval,
     requestAnimationFrame: (cb) => setTimeout(cb, 0),
     cancelAnimationFrame: clearTimeout,
     getComputedStyle: () => ({
@@ -557,18 +559,31 @@ test('runtime.js mounts ghost overlay, accepts on Tab, respects dark mode, and c
   sandbox.top = sandbox;
   sandbox.globalThis = sandbox;
 
-  const source = buildRuntimeSource({ version: '1.0.0', enabled: true });
+  const source = buildRuntimeSource({ version: '1.2.0', enabled: true });
   vm.runInNewContext(source, sandbox);
 
-  // Wait for initial tick (400ms)
+  // Wait for initial tick (400ms): historical idle conversation must NOT auto-request before user focuses editor
   await wait(460);
 
   assert.equal(htmlEl.getAttribute('data-agps-theme'), 'dark');
   assert.ok(doc.getElementById('agps-prompt-suggestions-style'), 'style tag should be injected');
-  assert.equal(requests.length, 1, 'should request suggestion for completed assistant turn');
+  assert.equal(requests.length, 0, 'idle historical conversation should not auto-request before editor focus');
+
+  // Focusing the empty editor triggers on-demand prediction
+  for (const fn of listeners.get('doc:focusin') || []) {
+    fn({ target: editor });
+  }
+  assert.equal(requests.length, 1, 'focusing empty editor should trigger suggestion request');
   assert.equal(requests[0].conversationId, '11111111-2222-3333-4444-555555555555');
 
-  // Deliver suggestion
+  // After 160ms in-flight delay, inline loading hint should appear with data-agps-loading="true"
+  await wait(200);
+  const loadingOverlay = host.querySelector('.agps-ghost-overlay');
+  assert.ok(loadingOverlay && !loadingOverlay.hidden, 'loading overlay should appear after 160ms');
+  assert.equal(loadingOverlay.getAttribute('data-agps-loading'), 'true');
+  assert.equal(loadingOverlay.querySelector('.agps-ghost-text').textContent, '正在构思下一句…');
+
+  // Deliver suggestion -> loading attr clears and ghost suggestion renders
   sandbox.__agps_on_suggestion(requests[0].reqId, {
     ok: true,
     completed: true,
@@ -577,6 +592,7 @@ test('runtime.js mounts ghost overlay, accepts on Tab, respects dark mode, and c
 
   const overlay = host.querySelector('.agps-ghost-overlay');
   assert.ok(overlay && !overlay.hidden, 'ghost overlay should be visible');
+  assert.equal(overlay.getAttribute('data-agps-loading'), null);
   assert.equal(overlay.querySelector('.agps-ghost-text').textContent, '帮我跑一下回归测试');
   assert.equal(host.getAttribute('data-agps-has-suggestion'), 'true');
 
@@ -600,6 +616,36 @@ test('runtime.js mounts ghost overlay, accepts on Tab, respects dark mode, and c
   assert.equal(prevented, true);
   assert.equal(editor.innerText, '帮我跑一下回归测试');
   assert.equal(overlay.hidden, true);
+
+  // Simulate brand-new assistant turn completing in the same conversation (without refocusing)
+  editor.innerText = '';
+  editor.textContent = '';
+  const assistantMsg2 = makeEl('div', { 'data-markdown-root': 'true' }, '回归测试全部通过，没有异常。');
+  convView.appendChild(assistantMsg2);
+  // Trigger tick via compositionend (60ms) -> new turn on same scope should auto-trigger!
+  for (const fn of listeners.get('doc:compositionend') || []) {
+    fn({});
+  }
+  await wait(100);
+  assert.equal(requests.length, 2, 'newly completed turn in same conversation should auto-trigger');
+
+  // Wait for loading hint, then press Escape to cancel/dismiss it
+  await wait(200);
+  assert.equal(overlay.getAttribute('data-agps-loading'), 'true');
+  for (const fn of listeners.get('doc:keydown') || []) {
+    fn({
+      key: 'Escape',
+      isComposing: false,
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false,
+      preventDefault() {},
+      stopPropagation() {}
+    });
+  }
+  assert.equal(overlay.hidden, true);
+  assert.equal(overlay.getAttribute('data-agps-loading'), null);
 
   // Dispose removes styles, attributes, overlays, and callback
   sandbox.__agps_runtime.dispose();

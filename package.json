@@ -1,6 +1,6 @@
 {
   "name": "agy-prompt-suggestions",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "Standalone Antigravity plugin for Claude Code-style Ghost Text prompt suggestions extracted from antigravity-codex-theme.",

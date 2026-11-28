@@ -20,7 +20,7 @@ const isDirectRun = (() => {
 
 export async function startSidecar() {
   const pkg = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8'));
-  const version = pkg.version || '1.1.1';
+  const version = pkg.version || '1.2.0';
   const settings = createSettingsStore();
   const launcher = createLauncherController();
   const engine = createPromptSuggestionEngine({
